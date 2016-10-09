@@ -1,0 +1,143 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<project name = "Protege Server Project" default = "run.server" basedir = "."> 
+    <property name="build"          location="./build"/>
+    <property name="protege.home"   location="./Protege"/>
+
+    <target name="init">
+        <mkdir dir="${build}"/>
+        <available file="${protege.home}" type = "dir" property="protege.home.exists"/>
+    </target>
+
+    <target name="ensure.protege.home.exists"
+            unless="protege.home.exists" 
+            depends="init">
+        <echo message="---------------------------------------- OSGi Infrastructure"/>
+        <ant antfile="build.xml"
+             target="install"
+             dir="./protege-base"/>
+    </target>
+
+    <target name="install" depends="ensure.protege.home.exists">
+        <echo message="----------------------------------------Protege Common"/>
+        <ant antfile="build.xml"
+             target="install"
+             dir="./org.protege.common">
+            <property name="classes" location="${build}/classes/common"/>
+        </ant>
+        <echo message="----------------------------------------JaxB libraries"/>
+        <ant antfile="build.xml"
+             target="install"
+             dir="./org.protege.jaxb">
+          <property name="classes" location="${build}/classes/jaxb"/>
+        </ant>
+        <echo message="----------------------------------------Protege Core"/>
+        <ant antfile="build.xml"
+             target="install"
+             dir="./org.protege.editor.core.application">
+            <property name="classes" location="${build}/classes/core"/>
+        </ant>
+        <echo message="----------------------------------------OWL api library"/>
+        <ant antfile="build.xml"
+             target="install"
+             dir="./org.semanticweb.owl.owlapi">
+            <property name="classes" location="${build}/classes/owlapi"/>
+        </ant>
+        <echo message="----------------------------------------Protege OWL Editor"/>
+        <ant antfile="build.xml"
+             target="install"
+             dir="./org.protege.editor.owl">
+            <property name="classes" location="${build}/classes/owl.editor"/>
+        </ant>
+
+        <echo message="----------------------------------------DL Query "/>
+        <ant antfile="build.xml"
+             target="install"
+             dir="./org.coode.dlquery">
+            <property name="classes" location="${build}/classes/dlquery"/>
+        </ant>
+
+        <echo message="----------------------------------------Binary Targets "/>
+        <ant antfile="build.xml"
+             target="install"
+             dir="./binary">
+            <property name="build" location="${build}/binary}"/>
+            <property name="classes" location="${build}/classes/binary"/>
+        </ant>
+    </target>
+
+    <target name="owlapi">
+     <echo message="**********************************************************"/>
+     <echo message="Using Protege Home = ${protege.home}"/>
+     <echo message="Using Java Version = ${ant.java.version}" />
+     <echo message="**********************************************************"/>
+      <ant antfile="build.xml"
+           target="clean"
+           dir="./${owlapi.project}/antbuild"/>
+      <ant antfile="build.xml"
+           target="binjar"
+           dir="./${owlapi.project}/antbuild"/>
+      <copy todir="./org.semanticweb.owl.owlapi/lib"
+            file="./${owlapi.project}/antbuild/build/owlapi-bin.jar"/>
+      <echo message="----------------------------------------OWL api library"/>
+      <ant antfile="build.xml"
+           target="install"
+           dir="./org.semanticweb.owl.owlapi">
+          <property name="classes" location="${build}/classes/owlapi"/>
+      </ant>
+      <copy todir="./org.ncbo.owlapi.preprocess/lib"
+            file="./${owlapi.project}/antbuild/build/owlapi-bin.jar"/>
+      <copy todir="./xmlcatalog/lib"
+            file="./${owlapi.project}/antbuild/build/owlapi-bin.jar"/>
+    </target>
+
+    <!-- ===================================================================  -->
+    <!-- RUN -->
+    <!-- ===================================================================  -->
+    <target name = "run" depends="init">
+      <property file="${protege.home}/build.properties"/>
+      <java fork = "true" dir = "${protege.home}" 
+            classname = "org.protege.osgi.framework.Launcher">
+        <jvmarg value = "-Dlog4j.configuration=file:log4j.xml"/>
+        <jvmarg value = "-Xmx1500M"/>
+        <classpath>
+          <pathelement path="${protege.osgi}"/>
+          <pathelement path="${protege.launcher}"/>
+        </classpath>
+      </java>
+    </target>
+
+    <!-- ===================================================================  -->
+    <!-- DEBUG -->
+    <!-- ===================================================================  -->
+    <target name = "debug" depends="init">
+      <property file="${protege.home}/build.properties"/>
+      <java fork = "true" dir = "${protege.home}" 
+            classname = "org.protege.osgi.framework.Launcher">
+        <jvmarg value = "-Dlog4j.configuration=file:log4j.xml"/>
+        <jvmarg value = "-agentlib:jdwp=transport=dt_socket,address=8500,server=y,suspend=y"/>
+        <jvmarg value = "-Xmx1500M"/>
+        <classpath>
+          <pathelement path="${protege.osgi}"/>
+          <pathelement path="${protege.launcher}"/>
+        </classpath>
+      </java>
+    </target>
+
+
+    <target name="usage">
+      <echo message="install - builds a Protege installation"/>
+      <echo message="owlapi  - builds the owlapi and puts the updated"/>
+      <echo message="          library in org.semanticweb.owl.owlapi."/>
+      <echo message="          Requires the owlapi library to be checked"/>
+      <echo message="          out into the ./owlapi directory"/>
+      <echo message="run     - runs Protege if it has been installed"/>
+      <echo message="debug   - debugs Protege using port 8500 if it has"/>
+      <echo message="          has been installed"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build}"/>
+    </target>
+
+
+</project>
