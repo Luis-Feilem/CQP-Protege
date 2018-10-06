@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+   <extension id="identifiers"
+              point="org.protege.editor.core.application.ViewComponent">
+      <label value="Competency Question IDs"/>
+      <class value="visualization.views.IDView"/>
+      <category value="@org.protege.querycategory"/>
+   </extension>
+   
+   <extension id="questions"
+              point="org.protege.editor.core.application.ViewComponent">
+      <label value="Competency Question Question"/>
+      <category value="@org.protege.querycategory"/>
+      <class value="visualization.views.QuestionView"/>
+   </extension>
+   
+   <extension id="answers"
+              point="org.protege.editor.core.application.ViewComponent">
+      <label value="Competency Question Answers"/>
+      <category value="@org.protege.querycategory"/>
+      <class value="visualization.views.AnswersView"/>
+   </extension>
+   <extension id="status"
+              point="org.protege.editor.core.application.ViewComponent">
+      <label value="Competency Question Status"/>
+      <category value="@org.protege.querycategory"/>
+      <class value="visualization.views.StatusView"/>
+   </extension>
+   
+   <extension id="comments"
+              point="org.protege.editor.core.application.ViewComponent">
+      <label value="Competency Question Comments"/>
+      <category value="@org.protege.querycategory"/>
+      <class value="visualization.views.CommentsView"/>
+   </extension>
+   
+   <extension id="metadata"
+              point="org.protege.editor.core.application.ViewComponent">
+      <label value="Competency Question Metadata"/>
+      <category value="@org.protege.querycategory"/>
+      <class value="visualization.views.MetadataView"/>
+   </extension>
+   
+   <extension id="CQWorkspaceTab"
+              point="org.protege.editor.core.application.WorkspaceTab">
+      <label value="CQ Plugin Tab"/>
+      <class value="org.protege.editor.owl.ui.OWLWorkspaceViewsTab"/>
+      <index value="X"/>
+      <editorKitId value="OWLEditorKit"/>
+      <defaultViewConfigFileName value="viewconfig-cqpluginTab.xml"/>
+   </extension>
+
+   <extension id="loadCompetencyQuestions"
+   			  point="org.protege.editor.core.application.EditorKitMenuAction">
+   	  <name value="Load Competency Questions"/>
+   	  <class value="data_manipulation.InAndOut.FileParserAgent"/>
+   	  <tooltip value="Loads a set of competency questions from a file"/>
+   	  <path value="org.protege.editor.core.application.menu.FileMenu/SlotAC-T"/>
+   	  <editorKitId value="OWLEditorKit"/>
+   </extension>
+    
+</plugin>

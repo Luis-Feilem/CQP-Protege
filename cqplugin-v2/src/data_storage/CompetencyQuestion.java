@@ -1,8 +1,7 @@
 package data_storage;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Vector;
 
 import data_storage.CompetencyQuestionComponents.Answer;
 import data_storage.CompetencyQuestionComponents.Comment;
@@ -18,22 +17,30 @@ import data_storage.CompetencyQuestionComponents.Status;
  */
 public class CompetencyQuestion extends OntologyRequirement {
 
-	private ID id;
 	private Question question;
 	private Status status;
-	private List<Comment> comments;
-	private List<Answer> answers;
-	
+//	private List<Comment> comments; JList are better used with arrays, Vectors and adding elements one at a time
+	private Vector<Comment> comments;
+//	private List<Answer> answers;
+	private Vector<Answer> answers;
 	/**
 	 * Create a Competency Question. Values are empty by default (except for its ID)
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public CompetencyQuestion() {
-		// TODO Auto-generated constructor stub
-		this.id = new ID();
-		this.question = new Question();
-		this.status = new Status();
-		this.comments = new LinkedList<Comment>();
-		this.answers = new ArrayList<Answer>();
+
+		question = new Question();
+		status = new Status();
+		comments = new Vector<Comment>();
+		answers = new Vector<Answer>();
+		
+		requirements = new ArrayList(4);
+		requirements.add(question);
+		requirements.add(status);
+		requirements.add(comments);
+		requirements.add(answers);
+		
+		id = new ID();
 	}
 
 	//GETTERS
@@ -60,17 +67,17 @@ public class CompetencyQuestion extends OntologyRequirement {
 	//Answers
 	/**
 	 * Retrieve the answers
-	 * @return The list of Answer attached to this CompetencyQuestion
+	 * @return The Vector of Answer attached to this CompetencyQuestion
 	 */
-	public List<Answer> getAnswers(){
+	public Vector<Answer> getAnswers(){
 		return answers;
 	}
 	//Comments
 	/**
 	 * Retrieve the comments
-	 * @return The list of Comment attached to this CompetencyQuestion
+	 * @return The Vector of Comment attached to this CompetencyQuestion
 	 */
-	public List<Comment> getComments(){
+	public Vector<Comment> getComments(){
 		return comments;
 	}
 	
@@ -116,9 +123,15 @@ public class CompetencyQuestion extends OntologyRequirement {
 	public void clearStatus(){
 		this.status.clearStatus();
 	}
+	/**
+	 * @see data_storage.CompetencyQuestionComponents.Status#setStatus(String)
+	 */
+	public boolean setStatus(String status){
+		return this.status.setStatus(status);
+	}
 	//Answers
 	/**
-	 * Adds an empty Answer to the list of answers.
+	 * Adds an empty Answer to the vector of answers.
 	 */
 	public void addAnswer(){
 		answers.add(new Answer());
@@ -131,25 +144,25 @@ public class CompetencyQuestion extends OntologyRequirement {
 		answers.add(new Answer(answer));
 	}
 	/**
-	 * Edits the Answer in a given position of the list.
-	 * @param pos - position of the answer within the list of Answer.
+	 * Edits the Answer in a given position of the vector.
+	 * @param pos - position of the answer within the vector of Answer.
 	 * @param answer - new String form of the answer
 	 */
 	public void editAnswer(int pos, String answer){
-		if(pos<answers.size())
+		if(pos > -1 && pos<answers.size())
 			answers.get(pos).setAnswerText(answer);
 	}
 	/**
-	 * Deletes an Answer in the list.
-	 * @param pos - position of the answer within the list of Answer.
+	 * Deletes an Answer in the vector.
+	 * @param pos - position of the answer within the vector of Answer.
 	 */
 	public void deleteAnswer(int pos){
-		if(pos<answers.size())
+		if(pos > -1 && pos<answers.size())
 			answers.remove(pos);
 	}
 	//Comments
 	/**
-	 * Adds an empty Comment to the list of comments.
+	 * Adds an empty Comment to the vector of comments.
 	 */
 	public void addComment(){
 		comments.add(new Comment());
@@ -163,20 +176,20 @@ public class CompetencyQuestion extends OntologyRequirement {
 		comments.add(new Comment(comment, author));
 	}
 	/**
-	 * Edits the Comment in a given position of the list.
-	 * @param pos - position of the Comment within the list of Comment
+	 * Edits the Comment in a given position of the vector.
+	 * @param pos - position of the Comment within the vector of Comment
 	 * @param comment - new String form of the comment.
 	 */
 	public void editComment(int pos, String comment){
-		if(pos<comments.size())
+		if(pos > -1 && pos<comments.size())
 			comments.get(pos).setCommentText(comment);
 	}
 	/**
-	 * Deletes an Comment in the list.
-	 * @param pos - position of the comment within the list of Comment.
+	 * Deletes an Comment in the vector.
+	 * @param pos - position of the comment within the vector of Comment.
 	 */
 	public void deleteComment(int pos){
-		if(pos<comments.size())
+		if(pos > -1 && pos<comments.size())
 			comments.remove(pos);
 	}
 }

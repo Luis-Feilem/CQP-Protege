@@ -1,20 +1,19 @@
 package data_storage.CompetencyQuestionComponents;
 
 import data_storage.CompetencyQuestionComponent;
-import data_storage.ID;
 
 /**
- * The Status of a Competency Question. This Component stores the status and has its own ID.
+ * The Status of a Competency Question. This Component stores the status.
  * @author Luis
  *
  */
 public class Status extends CompetencyQuestionComponent {
 
 	private String status;
-	private final String accepted = "Accepted";
-	private final String proposed = "Proposed";
-	private final String incomplete = "Incomplete";
-	private final String rejected = "Rejected";
+	public static final String accepted = "Accepted";
+	public static final String proposed = "Proposed";
+	public static final String incomplete = "Incomplete";
+	public static final String rejected = "Rejected";
 	
 	/**
 	 * Create a Status Component, providing its status. 
@@ -23,7 +22,6 @@ public class Status extends CompetencyQuestionComponent {
 	 */
 	public Status(String status) {
 		// TODO Auto-generated constructor stub
-		this.id = new ID();
 		if(status.equals(accepted) || status.equals(proposed) || status.equals(incomplete) || status.equals(rejected))
 			this.status=status;
 		else
@@ -33,7 +31,6 @@ public class Status extends CompetencyQuestionComponent {
 	 * Create an empty Status Component.
 	 */
 	public Status (){
-		this.id=new ID();
 		this.status="";
 	}
 
@@ -72,7 +69,17 @@ public class Status extends CompetencyQuestionComponent {
 	public void clearStatus(){
 		this.status="";
 	}
-	public ID getId(){
-		return super.getId();
+	
+	/**
+	 * If status is a known status, it is set to the given status and returns true, otherwise nothing changes and returns false.
+	 * @param status
+	 */
+	public boolean setStatus(String status){
+		if(status.equals(incomplete) || status.equals(accepted) || status.equals(proposed) || status.equals(rejected)){
+			this.status = status;
+			return true;
+		}
+		else
+			return false;
 	}
 }
