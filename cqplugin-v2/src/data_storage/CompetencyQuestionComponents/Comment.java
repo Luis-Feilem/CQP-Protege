@@ -3,15 +3,14 @@ package data_storage.CompetencyQuestionComponents;
 import java.sql.Timestamp;
 
 import data_storage.CompetencyQuestionComponent;
-import data_storage.ID;
 
 /**
  * A single Comment Component in a Competency Question. This Component stores a comment, its author,
- * a timestamp and has its own ID.
+ * and a timestamp.
  * @author Luis
  *
  */
-public class Comment extends CompetencyQuestionComponent {
+public class Comment extends CompetencyQuestionComponent{
 
 	private String commentText;
 	private String author;
@@ -21,7 +20,6 @@ public class Comment extends CompetencyQuestionComponent {
 	 * Creates an empty Comment Component.
 	 */
 	public Comment(){
-		this.id=new ID();
 		this.commentText="";
 		this.author="";
 		this.timestamp=null;
@@ -33,7 +31,6 @@ public class Comment extends CompetencyQuestionComponent {
 	 */
 	public Comment(String commentText, String author) {
 		// TODO Auto-generated constructor stub
-		this.id= new ID();
 		this.commentText=commentText;
 		this.author=author;
 		updateTimestamp();
@@ -59,17 +56,28 @@ public class Comment extends CompetencyQuestionComponent {
 		this.commentText=commentText;
 		updateTimestamp();
 	}
-	
-	public ID getId(){
-		return super.getId();
+	/**
+	 * Get the comment text stored
+	 * @return commentText
+	 */
+	public String getCommentText(){
+		return this.commentText;
 	}
+	
 	/**
 	 * Updates the author of the comment (and timestamp).
 	 * @param author - String form of the author
 	 */
 	public void setAuthor(String author){
 		this.author=author;
-		updateTimestamp();
+//		updateTimestamp();
+	}
+	/**
+	 * Get the author of this comment.
+	 * @return author
+	 */
+	public String getAuthor(){
+		return this.author;
 	}
 	/**
 	 * Updates a Comment completely: comment, author and timestamp.
@@ -87,7 +95,7 @@ public class Comment extends CompetencyQuestionComponent {
 	 * @return  yyyy-mm-dd hh:mm:ss.fffffffff, where ffffffffff indicates nanoseconds
 	 */
 	public String getDate(){
-		return this.timestamp.toString();
+		return "[" + this.timestamp.toString() + "]";
 	}
 	
 	/**
@@ -95,6 +103,7 @@ public class Comment extends CompetencyQuestionComponent {
 	 * timestamp \t author: comment.
 	 */
 	public String toString(){
-		return getDate() + "\t" + author + ": " + commentText;
+		return getDate() + " " + author + ": " + commentText;
 	}
+	
 }

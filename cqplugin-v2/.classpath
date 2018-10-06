@@ -2,5 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/Luis/protege4.1/org.protege.editor.core.application/build/org.protege.editor.core.application.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.protege.editor.owl"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.semanticweb.owl.owlapi"/>
+	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

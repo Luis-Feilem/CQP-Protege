@@ -1,10 +1,9 @@
 package data_storage.CompetencyQuestionComponents;
 
 import data_storage.CompetencyQuestionComponent;
-import data_storage.ID;
 
 /**
- * The Question Component in a Competency Question. This Component stores the Question and has its own ID.
+ * The Question Component in a Competency Question. This Component stores the Question.
  * @author Luis
  *
  */
@@ -17,14 +16,12 @@ public class Question extends CompetencyQuestionComponent {
 	 * @param cqtext - String form of the question.
 	 */
 	public Question(String cqtext) {
-		this.id = new ID();
 		this.cqtext=cqtext;
 	}
 	/**
 	 * Create an empty Question Component for a Competency Question.
 	 */
 	public Question(){
-		this.id= new ID();
 		this.cqtext="";
 	}
 
@@ -40,8 +37,5 @@ public class Question extends CompetencyQuestionComponent {
 	 */
 	public void setCqtext(String cqtext){
 		this.cqtext=cqtext;
-	}
-	public ID getId(){
-		return super.getId();
 	}
 }

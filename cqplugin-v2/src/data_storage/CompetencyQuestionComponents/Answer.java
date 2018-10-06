@@ -1,10 +1,9 @@
 package data_storage.CompetencyQuestionComponents;
 
 import data_storage.CompetencyQuestionComponent;
-import data_storage.ID;
 
 /**
- * A single Answer Component in a Competency Question. This Component stores an answer and has its own ID.
+ * A single Answer Component in a Competency Question. This Component stores an answer.
  * @author Luis
  *
  */
@@ -18,14 +17,12 @@ public class Answer extends CompetencyQuestionComponent {
 	 */
 	public Answer(String answerText) {
 		// TODO Auto-generated constructor stub
-		this.id= new ID();
 		this.answerText=answerText;
 	}
 	/**
 	 * Create an empty Answer Component for a Competency Question
 	 */
 	public Answer(){
-		this.id = new ID();
 		this.answerText="";
 	}
 
@@ -40,8 +37,5 @@ public class Answer extends CompetencyQuestionComponent {
 	 */
 	public void setAnswerText(String answerText){
 		this.answerText=answerText;
-	}
-	public ID getId(){
-		return super.getId();
 	}
 }
